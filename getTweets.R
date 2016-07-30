@@ -20,5 +20,5 @@ twitterCloud <- function(searchString, n = 500, remove.words = '') {
   tweets.clean <- tm_map(tweets.clean, removeWords, remove.words)
   
   # make wordcloud
-  wordcloud(tweets.clean, max.words = 500, colors = brewer.pal(8,"Set2"), scale = c(6,.5), random.order = F)
+  wordcloud(tweets.clean, max.words = 500, colors = brewer.pal(8,"Set2"), scale = c(5,.5), random.order = F)
 }
