@@ -7,7 +7,7 @@ twitterCloud <- function(searchString, n = 500, remove.words = '') {
   tweets <- searchTwitteR(searchString = searchString, n = n)
   tweets.char <- sapply(tweets, function(x) x$getText())
   tweets.char.bk <- iconv(tweets.char,'UTF-8', 'ASCII')
-  tweets.char.bk <- gsub("(f|ht)tp(s?)", "", tweets.char.bk)
+  tweets.char.bk <- gsub("http[^[:blank:]]+", "", tweets.char.bk)
   tweets.corpus <- Corpus(VectorSource(tweets.char.bk))
   
   
@@ -20,5 +20,5 @@ twitterCloud <- function(searchString, n = 500, remove.words = '') {
   tweets.clean <- tm_map(tweets.clean, removeWords, remove.words)
   
   # make wordcloud
-  wordcloud(tweets.clean, max.words = 500, colors = brewer.pal(8,"Set2"), scale = c(5,.5), random.order = F)
+  wordcloud(tweets.clean, max.words = 500, colors = brewer.pal(8,"Set2"), scale = c(4,.6), random.order = F)
 }
