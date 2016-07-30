@@ -2,10 +2,13 @@ twitterCloud <- function(searchString, n = 500, remove.words = '') {
   require(twitteR)
   require(tm)
   require(wordcloud)
+  require(RColorBrewer)
   
   tweets <- searchTwitteR(searchString = searchString, n = n)
   tweets.char <- sapply(tweets, function(x) x$getText())
-  tweets.corpus <- Corpus(VectorSource(tweets.char))
+  tweets.char.bk <- iconv(tweets.char,'UTF-8', 'ASCII')
+  tweets.char.bk <- gsub("(f|ht)tp(s?)", "", tweets.char.bk)
+  tweets.corpus <- Corpus(VectorSource(tweets.char.bk))
   
   
   # cleaning data
@@ -17,5 +20,5 @@ twitterCloud <- function(searchString, n = 500, remove.words = '') {
   tweets.clean <- tm_map(tweets.clean, removeWords, remove.words)
   
   # make wordcloud
-  wordcloud(tweets.clean, max.words = n, colors = rainbow(50), scale = c(12,1))
+  wordcloud(tweets.clean, max.words = 500, colors = brewer.pal(8,"Set2"), scale = c(6,.5), random.order = F)
 }
